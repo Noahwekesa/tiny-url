@@ -10,8 +10,10 @@ async function getData() {
   if (!res.ok) {
     throw new Error("Failed to fetch data.");
   }
+  if (res.headers.get("Content-Type").includes("application/json")) {
+    return { items: [] };
+  }
   return res.json();
-  // return { items: [] };
 }
 export default async function BlogPage() {
   const data = await getData();
