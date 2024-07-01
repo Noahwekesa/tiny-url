@@ -5,7 +5,7 @@ async function getData() {
   const domain = getDomain();
 
   const endpoint = `${domain}/localhost:3000/api/posts`;
-  const res = await fetch(endpoint);
+  const res = await fetch(endpoint, { next: { revalidate: 10 } });
 
   if (!res.ok) {
     throw new Error("Failed to fetch data.");
@@ -25,7 +25,7 @@ export default async function BlogPage() {
       <h1 className="text-5xl">Blog route</h1>
       {items &&
         items.map((item, idx) => {
-          return <li key={`post-${idx}`}>{items.title}</li>;
+          return <li key={`post-${idx}`}>{item.title}</li>;
         })}
     </main>
   );
